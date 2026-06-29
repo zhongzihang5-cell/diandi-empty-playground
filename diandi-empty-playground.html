@@ -2513,6 +2513,23 @@ window.__BUILD__ = '20260522-v101-dev';
     );
   }
 
+  const EMPTY_ARROW_DEFAULTS = {
+    'ep-s1-arrow-position-v3': null,
+    'ep-s2-arrow-position': null,
+    'ep-s5-arrow-position': null,
+  };
+  window.__getEmptyArrowPositions = () => {
+    const result = {};
+    Object.keys(EMPTY_ARROW_DEFAULTS).forEach((key) => {
+      try{
+        result[key] = JSON.parse(localStorage.getItem(key) || 'null') || EMPTY_ARROW_DEFAULTS[key];
+      }catch(e){
+        result[key] = EMPTY_ARROW_DEFAULTS[key];
+      }
+    });
+    return result;
+  };
+
   function EmptyFabArrow({hidden=false, editable=false, storageKey='ep-fab-arrow-position'}){
     const arrowRef = React.useRef(null);
     const dragRef = React.useRef(null);
@@ -2528,9 +2545,10 @@ window.__BUILD__ = '20260522-v101-dev';
     }, []);
     const [pos, setPos] = React.useState(() => {
       if(!editable) return null;
+      const defaultPos = EMPTY_ARROW_DEFAULTS[storageKey] || null;
       try{
         const saved = localStorage.getItem(storageKey);
-        if(!saved) return null;
+        if(!saved) return defaultPos;
         const parsed = JSON.parse(saved);
         if(
           typeof window === 'undefined' ||
@@ -2540,11 +2558,11 @@ window.__BUILD__ = '20260522-v101-dev';
           parsed.top > window.innerHeight - 24
         ){
           localStorage.removeItem(storageKey);
-          return null;
+          return defaultPos;
         }
         return parsed;
       }catch(e){
-        return null;
+        return defaultPos;
       }
     });
 
@@ -2585,7 +2603,7 @@ window.__BUILD__ = '20260522-v101-dev';
     const handleDoubleClick = React.useCallback(() => {
       if(!editable) return;
       try{ localStorage.removeItem(storageKey); }catch(e){}
-      setPos(null);
+      setPos(EMPTY_ARROW_DEFAULTS[storageKey] || null);
     }, [editable, storageKey]);
 
     const style = pos ? {
