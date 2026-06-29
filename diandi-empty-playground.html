@@ -1596,6 +1596,149 @@ html,body{
 .ep-s5 .ep-s1-fab-arrow.is-editable:active{
   cursor:grabbing;
 }
+.ep-s6{
+  min-height:calc(100dvh - 96px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:92px 26px 210px;
+  box-sizing:border-box;
+}
+.ep-s6-example-card{
+  width:100%;
+  max-width:318px;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 18px 54px rgba(40,40,48,.08);
+  padding:24px 22px 22px;
+}
+.ep-s6-title{
+  margin:0 0 18px;
+  color:#2f3034;
+  font-size:22px;
+  line-height:1.28;
+  font-weight:700;
+  letter-spacing:0;
+}
+.ep-s6-divider{
+  height:1px;
+  background:rgba(0,0,0,.07);
+  margin-bottom:4px;
+}
+.ep-s6-row{
+  display:grid;
+  grid-template-columns:54px 24px 1fr;
+  gap:10px;
+  align-items:flex-start;
+  min-height:72px;
+  padding:16px 0 0;
+  color:#2f3034;
+}
+.ep-s6-time{
+  color:rgba(0,0,0,.48);
+  font-size:17px;
+  line-height:30px;
+  font-variant-numeric:tabular-nums;
+}
+.ep-s6-dot-wrap{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  padding-top:12px;
+}
+.ep-s6-row:not(:last-child) .ep-s6-dot-wrap::after{
+  content:"";
+  position:absolute;
+  top:22px;
+  bottom:-62px;
+  left:50%;
+  width:1px;
+  background:rgba(0,0,0,.08);
+  transform:translateX(-50%);
+}
+.ep-s6-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ff4d88;
+  box-shadow:0 0 0 4px rgba(255,77,136,.12);
+  z-index:1;
+}
+.ep-s6-dot.is-period{
+  background:#ff7e57;
+  box-shadow:0 0 0 4px rgba(255,126,87,.12);
+}
+.ep-s6-main{
+  min-width:0;
+}
+.ep-s6-line{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:18px;
+  line-height:30px;
+  font-weight:600;
+}
+.ep-s6-icon{
+  width:30px;
+  height:30px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:17px;
+  background:linear-gradient(135deg,#ff78ac,#ff4d88);
+  box-shadow:0 8px 18px rgba(255,77,136,.22);
+}
+.ep-s6-icon.is-period{
+  background:linear-gradient(135deg,#ff9b7b,#ff6452);
+  box-shadow:0 8px 18px rgba(255,100,82,.2);
+}
+.ep-s6-desc{
+  margin-top:7px;
+  color:rgba(0,0,0,.45);
+  font-size:14px;
+  line-height:1.45;
+}
+.ep-s6-chip{
+  display:inline-flex;
+  align-items:center;
+  margin-top:8px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:rgba(255,77,136,.1);
+  color:#ff4d88;
+  font-size:12px;
+  font-weight:600;
+}
+.ep-s6-dock-bubble{
+  position:fixed;
+  left:50%;
+  bottom:calc(var(--my-safe-bottom) + 154px);
+  transform:translateX(-50%);
+  z-index:90;
+  padding:10px 18px;
+  border-radius:12px;
+  background:rgba(54,54,58,.86);
+  color:#fff;
+  font-size:16px;
+  line-height:1;
+  font-weight:500;
+  box-shadow:0 10px 26px rgba(0,0,0,.16);
+  pointer-events:none;
+  white-space:nowrap;
+}
+.ep-s6-dock-bubble::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-9px;
+  width:18px;
+  height:18px;
+  background:inherit;
+  border-radius:3px;
+  transform:translateX(-50%) rotate(45deg);
+}
 .empty-playground-scheme2 .ep-s1-fab-arrow.is-editable{
   position:fixed;
   left:50%;
@@ -2138,10 +2281,11 @@ html,body{
     <a href="?scheme=3">3</a>
     <a href="?scheme=4">4</a>
     <a href="?scheme=5">5</a>
+    <a href="?scheme=6">6</a>
   </div>
 </div>
 <script>
-const EMPTY_PLAYGROUND_ALLOWED = ['1', '2', '3', '4', '5'];
+const EMPTY_PLAYGROUND_ALLOWED = ['1', '2', '3', '4', '5', '6'];
 const EMPTY_SWITCHER_RAW_SCHEME = new URLSearchParams(location.search).get('scheme') || '1';
 const EMPTY_PLAYGROUND_LEGACY_SCHEME = { '6':'4' };
 const EMPTY_SWITCHER_SCHEME = EMPTY_PLAYGROUND_ALLOWED.includes(EMPTY_SWITCHER_RAW_SCHEME)
@@ -2231,7 +2375,7 @@ window.__BUILD__ = '20260522-v101-dev';
     },
   });
 
-  ['1', '2', '3', '4', '5'].forEach((schemeId) => {
+  ['1', '2', '3', '4', '5', '6'].forEach((schemeId) => {
     const scene = buildEmptyScene(schemeId);
     window.DEMO_SCENES[scene.id] = scene;
   });
@@ -2603,7 +2747,7 @@ window.__BUILD__ = '20260522-v101-dev';
     const handleDoubleClick = React.useCallback(() => {
       if(!editable) return;
       try{ localStorage.removeItem(storageKey); }catch(e){}
-      setPos(EMPTY_ARROW_DEFAULTS[storageKey] || null);
+      setPos(null);
     }, [editable, storageKey]);
 
     const style = pos ? {
@@ -3090,6 +3234,42 @@ window.__BUILD__ = '20260522-v101-dev';
     );
   }
 
+  function EmptyScheme6Body(){
+    return (
+      <div className="ep-s6" aria-label="方案6 静态示例卡片引导">
+        <section className="ep-s6-example-card" aria-hidden="true">
+          <h2 className="ep-s6-title">记录心情和周期变化</h2>
+          <div className="ep-s6-divider"/>
+          <div className="ep-s6-row">
+            <div className="ep-s6-time">09:20</div>
+            <div className="ep-s6-dot-wrap"><span className="ep-s6-dot"/></div>
+            <div className="ep-s6-main">
+              <div className="ep-s6-line">
+                <span className="ep-s6-icon">☺</span>
+                心情不错
+              </div>
+              <div className="ep-s6-desc">早上醒来精神还可以，感觉心里轻松了一点。</div>
+              <span className="ep-s6-chip">心情</span>
+            </div>
+          </div>
+          <div className="ep-s6-row">
+            <div className="ep-s6-time">08:10</div>
+            <div className="ep-s6-dot-wrap"><span className="ep-s6-dot is-period"/></div>
+            <div className="ep-s6-main">
+              <div className="ep-s6-line">
+                <span className="ep-s6-icon is-period">滴</span>
+                月经来了
+              </div>
+              <div className="ep-s6-desc">今天开始记录经期，身体变化会自动沉淀在时间轴里。</div>
+              <span className="ep-s6-chip">月经</span>
+            </div>
+          </div>
+        </section>
+        <div className="ep-s6-dock-bubble" aria-hidden="true">快来试试吧</div>
+      </div>
+    );
+  }
+
   function EmptyPlaygroundRecordBlankStream(props){
     const scene = props.scene;
     const id = scene?.id;
@@ -3120,15 +3300,17 @@ window.__BUILD__ = '20260522-v101-dev';
       }
       return legacyStream;
     }
-    if(!/^empty-playground-[135]$/.test(id || '')){
+    if(!/^empty-playground-[1356]$/.test(id || '')){
       return OriginalRecordBlankStream(props);
     }
     const Body = id === 'empty-playground-1'
       ? EmptyScheme1Body
       : id === 'empty-playground-5'
         ? EmptyScheme3Body
-        : id === 'empty-playground-3'
+      : id === 'empty-playground-3'
           ? EmptyScheme5Body
+          : id === 'empty-playground-6'
+            ? EmptyScheme6Body
           : EmptyScheme2Body;
     return (
       <div className={'suiji-stream record-blank-stream ' + id.replace('empty-playground-', 'is-scheme')} ref={props.streamRef}>
