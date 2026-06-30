@@ -964,8 +964,12 @@ html,body{
   color:#fff;
 }
 .empty-playground-page .record-blank-stream .stream-header{
-  position:sticky;
-  top:0;
+  position:fixed;
+  top:44px;
+  left:50%;
+  right:auto;
+  width:min(390px, 100vw);
+  transform:translateX(-50%);
   z-index:80;
   height:50px;
   padding:0 18px;
