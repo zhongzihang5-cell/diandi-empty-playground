@@ -1693,13 +1693,20 @@ html,body{
   transform:translateX(-50%) rotate(45deg);
 }
 .ep-s7{
-  padding:18px 0 220px;
+  padding:132px 0 220px;
 }
 .ep-s7-sync-card{
+  position:fixed;
+  left:50%;
+  top:106px;
+  width:min(342px, calc(100vw - 48px));
+  transform:translateX(-50%);
+  z-index:78;
   display:flex;
   align-items:center;
   gap:14px;
-  margin:8px 0 28px;
+  box-sizing:border-box;
+  margin:0;
   padding:16px 18px;
   border-radius:18px;
   border:1px solid rgba(255,77,136,.16);
