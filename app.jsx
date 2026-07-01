@@ -915,7 +915,7 @@ function App(){
           onPhoto={()=>setShowPhoto(true)}
           onDockExpandedChange={setDockExpanded}
           activeTab={activeTab}
-          defaultInputMode={showScheme1Hints ? 'voice' : 'text'}
+          defaultInputMode={(showScheme1Hints || t.demoScene === 'empty-playground-6') ? 'voice' : 'text'}
           showScheme3Bubble={showScheme3Bubble}
           highlightScheme3Input={highlightScheme3Input}
           demoPhase={demoPhase}
